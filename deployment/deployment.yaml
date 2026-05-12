@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: analyse-oel
-        image: colaslepoutre/analyse-oel:main
+        image: colaslepoutre/analyse-oel:test
         ports:
         - containerPort: 8000
         env:
