@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jobless-front-deployment
+  name: analyse-oel-front-deployment
   labels:
-    app: jobless-front
+    app: analyse-oel-front
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: jobless-front
+      app: analyse-oel-front
   template:
     metadata:
       labels:
-        app: jobless-front
+        app: analyse-oel-front
     spec:
       containers:
-      - name: jobless-front
-        image: arthurleroudier/jobless_front:v1.1.1
+      - name: analyse-oel-front
+        image: colaslepoutre/analyse-oel_front:v1.1.1
         imagePullPolicy: Always
         ports:
         - containerPort: 8501

@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jobless-deployment
+  name: analyse-oel-deployment
   labels:
-    app: jobless
+    app: analyse-oel
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: jobless
+      app: analyse-oel
   template:
     metadata:
       labels:
-        app: jobless
+        app: analyse-oel
     spec:
       containers:
-      - name: jobless
-        image: arthurleroudier/jobless:v1.0
+      - name: analyse-oel
+        image: colaslepoutre/analyse-oel:v1.0
         ports:
         - containerPort: 8000
         env:
