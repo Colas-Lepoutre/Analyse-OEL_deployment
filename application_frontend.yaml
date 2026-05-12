@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: jobless-frontend
+  name: analyse-oel-frontend
 spec:
   project: default
   source:
-    repoURL: https://github.com/arthurleroudier/Jobless_deployment.git
+    repoURL: https://github.com/Colas-Lepoutre/Analyse-OEL_deployment.git
     targetRevision: main
     path: deployment_front
   destination:
     server: https://kubernetes.default.svc
-    namespace: user-aleroudier
+    namespace: user-colaslepoutre
   syncPolicy:
     automated:
       selfHeal: true
