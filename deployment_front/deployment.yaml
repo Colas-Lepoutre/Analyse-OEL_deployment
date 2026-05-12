@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: analyse-oel-front
-        image: colaslepoutre/analyse-oel_front:main
+        image: colaslepoutre/analyse-oel_front:test
         imagePullPolicy: Always
         ports:
         - containerPort: 8501
