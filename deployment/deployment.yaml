@@ -16,17 +16,23 @@ spec:
     spec:
       containers:
       - name: analyse-oel
-        image: colaslepoutre/analyse-oel:sha-139b499
+        image: colaslepoutre/analyse-oel:sha-0b9cb74
         ports:
         - containerPort: 8000
         env:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
-              name: aws-secret
-              key: access_key
+              name: analyse-oel-secrets
+              key: AWS_ACCESS_KEY_ID
         - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
-              name: aws-secret
-              key: secret_key
+              name: analyse-oel-secrets
+              key: AWS_SECRET_ACCESS_KEY
+        - name: API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: analyse-oel-secrets
+                key: API_KEY
+  
