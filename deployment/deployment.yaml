@@ -30,6 +30,11 @@ spec:
             secretKeyRef:
               name: analyse-oel-secrets
               key: AWS_SECRET_ACCESS_KEY
+        - name: AWS_REGION
+          valueFrom:
+            secretKeyRef:
+              name: analyse-oel-secrets
+              key: AWS_REGION
         - name: API_KEY
           valueFrom:
             secretKeyRef:
