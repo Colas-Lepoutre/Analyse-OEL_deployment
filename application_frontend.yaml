@@ -10,7 +10,7 @@ spec:
     path: deployment_front
   destination:
     server: https://kubernetes.default.svc
-    namespace: user-colaslepoutre
+    namespace: projet-jocas-dev
   syncPolicy:
     automated:
       selfHeal: true
