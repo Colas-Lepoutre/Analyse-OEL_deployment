@@ -19,10 +19,3 @@ spec:
         image: colaslepoutre/analyse-oel:sha-139b499
         ports:
         - containerPort: 8000
-        env:
-                - name: API_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: api-jeton
-                      key: API_KEY
-                      
