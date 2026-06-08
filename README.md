@@ -1,6 +1,6 @@
-# Jobless — Dépôt GitOps
+# Analyse-OEL — Dépôt GitOps
 
-> Dépôt de déploiement continu du projet [JobLess](https://github.com/anhlinhpiketty/Mise_en_production_DS) sur SSP Cloud via ArgoCD.
+> Dépôt de déploiement continu du projet [Analyse-OEL](https://github.com/Colas-Lepoutre/Analyse-OEL) sur SSP Cloud via ArgoCD.
 
 ---
 
@@ -72,20 +72,20 @@ kubectl apply -f application_frontend.yaml
 
 ### Backend (FastAPI)
 
-- **Image** : `arthurleroudier/jobless:v1.0`
+- **Image** : `colaslepoutre/analyse-oel:sha-...`
 - **Port** : `8000`
 - **Replicas** : 1
-- **Secret requis** : `api-jeton` (clé `API_KEY`)
+- **Secret requis** : `analyse-oel-secrets` (clé `API_KEY`, `AWS_ACCESS_KEY_ID`,`AWS_SECRET_ACCESS_KEY`,`AWS_REGION`)
 - **Exposition** : Service ClusterIP (port 80 → 8000)
 
 ### Frontend (Streamlit)
 
-- **Image** : `arthurleroudier/jobless_front:v1.0` — `imagePullPolicy: Always`
+- **Image** : `colaslepoutre/analyse-oel_front:sha-...` — `imagePullPolicy: Always`
 - **Port** : `8501`
 - **Replicas** : 1
 - **Secret requis** : Aucun
 - **Exposition** : Service LoadBalancer + Ingress NGINX
-- **URL publique** : `https://jobless-website.lab.sspcloud.fr`
+- **URL publique** : `https://analyse-oel.lab.sspcloud.fr`
 
 ---
 
@@ -94,10 +94,13 @@ kubectl apply -f application_frontend.yaml
 Avant tout déploiement, créer les secrets dans le namespace cible :
 
 ```bash
-# Clé API LLM (backend)
-kubectl create secret generic api-jeton \
-  --from-literal=API_KEY='votre_clé_api_llm' \
-  -n user-aleroudier
+# Clé API LLM + Accès S3 (backend)
+kubectl delete secret analyse-oel-secrets --ignore-not-found
+kubectl create secret generic analyse-oel-secrets \
+  --from-literal=API_KEY="sk-..." \
+  --from-literal=AWS_ACCESS_KEY_ID="..." \
+  --from-literal=AWS_SECRET_ACCESS_KEY="..." \
+  --from-literal=AWS_REGION="..."
 ```
 
 ---
@@ -107,14 +110,14 @@ kubectl create secret generic api-jeton \
 L'Ingress frontend est configuré avec :
 
 - **Classe** : `nginx`
-- **TLS** activé sur `jobless-website.lab.sspcloud.fr`
+- **TLS** activé sur `analyse-oel.lab.sspcloud.fr`
 - **CORS** ouvert (`*`) avec les méthodes `GET, POST, PUT, DELETE, OPTIONS`
 
 ---
 
 ## Flux de mise à jour
 
-1. Un développeur pousse du code sur le [dépôt principal](https://github.com/anhlinhpiketty/Mise_en_production_DS)
+1. Un développeur pousse du code sur le [dépôt principal](https://github.com/Colas-Lepoutre/Analyse-OEL)
 2. GitHub Actions build et pousse la nouvelle image Docker sur Docker Hub (tag `v*` ou `main`)
 3. Le manifeste `deployment.yaml` est mis à jour manuellement (ou par automation) avec le nouveau tag d'image
 4. Le push sur `main` de ce dépôt déclenche la synchronisation ArgoCD
@@ -124,6 +127,6 @@ L'Ingress frontend est configuré avec :
 
 ## Liens
 
-- [Dépôt principal — code source](https://github.com/anhlinhpiketty/Mise_en_production_DS)
-- [Application en ligne](https://jobless-website.lab.sspcloud.fr/)
-- [Documentation du projet](https://anhlinhpiketty.github.io/Mise_en_production_DS/)
+- [Dépôt principal — code source](https://github.com/Colas-Lepoutre/Analyse-OEL)
+- [Application en ligne](https://analyse-oel.lab.sspcloud.fr/)
+- [Documentation du projet](https://Colas-Lepoutre.github.io/Analyse-OEL/)
